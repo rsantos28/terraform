@@ -1,11 +1,18 @@
 
 
 resource "aws_instance" "app_server" {
-  ami           = "ami-830c94e3"
-  instance_type = "t2.micro"
+  ami           = "var.image_id"
+  instance_type = "var.instance_type"
   count         = 3
 
   tags = {
-    Name = "Eproduction"
+    Name = "var.env"
+  }
+}
+resource "aws_s3_bucket" "b" {
+  bucket = var.bucketname
+  tags = {
+    Name        = "My tf bucket"
+    Environment = "var.env"
   }
 }
